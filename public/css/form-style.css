@@ -1,0 +1,78 @@
+form {
+    max-width: 600px; /* Limita el ancho del formulario para una mejor apariencia */
+    margin: 2rem auto; /* Centra el formulario horizontalmente */
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 12px; /* Bordes redondeados */
+   
+}
+
+form label {
+    display: block; /* Hace que cada etiqueta ocupe toda la línea */
+    margin-bottom: 0.9rem;
+    font-weight: 600; /* Negrita para las etiquetas */
+    color: #1f2937;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.8rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #ffffff; /* Cambia el borde a blanco al enfocar */
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); /* Agrega un efecto de sombra azul claro al enfocar */
+}
+
+form button {
+    background: linear-gradient(135deg, #166534 0%, #22c55e 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    box-shadow: 0 8px 20px rgba(22, 101, 52, 0.2);
+}
+
+form button:hover {
+    background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+    transform: translateY(-1px);
+}
+
+.icon-delete-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-delete-button img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
