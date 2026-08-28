@@ -19,7 +19,7 @@ return new class extends Migration
 
 
              //Primera llave foranea
-            $table->unsignedBigInteger('course_id')->nullable()->unique();
+            $table->unsignedBigInteger('course_id')->nullable();
 
             $table->foreign('course_id')
                 ->references('id')

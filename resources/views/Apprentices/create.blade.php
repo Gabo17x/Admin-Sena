@@ -1,218 +1,210 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aprendices - AdminSENA</title>
+@extends('layouts.app')
 
-    <!-- 1. Bootstrap 5.3.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('title', 'Registrar Aprendiz | AdminSENA')
 
-    <!-- 2. Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-<body class="bg-light">
+@push('styles')
+<style>
+    .form-sena-card {
+        background: #ffffff;
+        border: 1.5px solid #d1fae5;
+        border-radius: 2rem;
+        box-shadow: 0 20px 40px -15px rgba(0, 50, 77, 0.07);
+    }
+    .btn-sena-pill {
+        background-color: #39A900;
+        color: #ffffff !important;
+        border-radius: 9999px;
+        font-weight: 700;
+        padding: 0.6rem 1.6rem;
+        border: none;
+        transition: all 0.2s ease;
+    }
+    .btn-sena-pill:hover {
+        background-color: #2f8b00;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(57, 169, 0, 0.3);
+    }
+    .btn-sena-outline {
+        border-radius: 9999px;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #39A900;
+        box-shadow: 0 0 0 0.25rem rgba(57, 169, 0, 0.15);
+    }
+    .table-sena thead th {
+        background-color: #00324D;
+        color: #ffffff;
+        border: none;
+    }
+    .table-sena {
+        min-width: 850px;
+    }
+</style>
+@endpush
 
-    {{-- Barra de Navegación --}}
-    @include('includes.navbar')
+@section('content')
+<div class="container-xl px-4" style="max-width: 1150px;">
 
-    <div class="container my-5">
-        {{-- Encabezado --}}
-        <div class="mb-4">
-            <h2 class="fw-bold text-dark mb-0">Aprendices</h2>
-            <p class="text-muted mb-0">Gestión y registro de aprendices</p>
+    {{-- Encabezado --}}
+    <div class="mb-4">
+        <h2 class="fw-bold" style="color: #00324D;">Registrar Aprendiz</h2>
+        <p class="text-secondary small mb-0">Completa la información para agregar un nuevo aprendiz al sistema.</p>
+    </div>
+
+    {{-- Alerta de éxito --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show rounded-4 shadow-sm" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
         </div>
+    @endif
 
-        {{-- Alerta de éxito --}}
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-                <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-            </div>
-        @endif
+    {{-- Alerta de error --}}
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show rounded-4 shadow-sm" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Revisa los campos marcados para continuar.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    @endif
 
-        {{-- Tarjeta y tabla de aprendices registrados --}}
-        <div class="card shadow-sm border-0 rounded-3 mb-5">
-            <div class="card-header bg-white py-3 border-bottom">
-                <h5 class="fw-bold text-dark mb-0">Aprendices registrados</h5>
-            </div>
-            <div class="card-body p-0">
-                @if($apprentices->isEmpty())
-                    <div class="text-center py-5 text-muted">
-                        <i class="bi bi-folder-x fs-1 d-block mb-2 text-secondary"></i>
-                        <em>No hay aprendices registrados aún.</em>
-                    </div>
-                @else
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light border-bottom">
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-header bg-white border-bottom py-3">
+            <h5 class="fw-bold mb-0" style="color: #00324D;">Aprendices guardados</h5>
+        </div>
+        <div class="card-body p-0">
+            @if ($apprentices->isEmpty())
+                <div class="text-center text-secondary py-5">
+                    <i class="bi bi-people fs-1 d-block mb-2"></i>
+                    Todavía no hay aprendices registrados.
+                </div>
+            @else
+                <div class="table-responsive">
+                    <table class="table table-sena table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-3">Nombre</th>
+                                <th class="py-3">Correo</th>
+                                <th class="py-3">Documento</th>
+                                <th class="py-3">Curso</th>
+                                <th class="py-3">Computador</th>
+                                <th class="py-3 text-end px-4">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($apprentices as $apprentice)
                                 <tr>
-                                    <th class="px-4 py-3 text-secondary" style="width: 70px;">#</th>
-                                    <th class="py-3 text-secondary">Nombre</th>
-                                    <th class="py-3 text-secondary">Correo</th>
-                                    <th class="py-3 text-secondary">Teléfono</th>
-                                    <th class="py-3 text-secondary">Curso</th>
-                                    <th class="py-3 text-secondary">Computador</th>
-                                    <th class="py-3 text-end px-4 text-secondary" style="width: 260px;">Acciones</th>
+                                    <td class="px-4 fw-semibold text-dark">{{ $apprentice->name }}</td>
+                                    <td class="text-secondary">{{ $apprentice->email }}</td>
+                                    <td class="text-secondary">{{ $apprentice->number }}</td>
+                                    <td class="text-secondary">{{ $apprentice->course?->course_number ?? 'Sin curso' }}</td>
+                                    <td class="text-secondary">
+                                        {{ $apprentice->computer ? ($apprentice->computer->brand ?? 'Equipo') . ' #' . $apprentice->computer->id : 'Sin computador' }}
+                                    </td>
+                                    <td class="text-end px-4">
+                                        <div class="d-inline-flex gap-2">
+                                            <a href="{{ route('apprentice.edit', $apprentice) }}" class="btn btn-sm btn-outline-success" title="Editar">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form action="{{ route('apprentice.destroy', $apprentice) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Deseas eliminar este aprendiz?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($apprentices as $apprentice)
-                                    <tr>
-                                        {{-- ID --}}
-                                        <td class="px-4 fw-semibold text-secondary">{{ $apprentice->id }}</td>
-
-                                        {{-- Nombre con Icono --}}
-                                        <td class="fw-semibold text-dark">
-                                            <i class="bi bi-person text-success me-2 fs-5 align-middle"></i>
-                                            <span>{{ $apprentice->name }}</span>
-                                        </td>
-
-                                        {{-- Correo --}}
-                                        <td class="text-muted">
-                                            {{ $apprentice->email }}
-                                        </td>
-
-                                        {{-- Teléfono --}}
-                                        <td class="text-muted">
-                                            {{ $apprentice->phone ?? $apprentice->cellphone ?? 'N/A' }}
-                                        </td>
-
-                                        {{-- Curso (Ficha o Nombre) --}}
-                                        <td class="text-secondary">
-                                            {{ optional($apprentice->course)->code ?? optional($apprentice->course)->name ?? $apprentice->course_id }}
-                                        </td>
-
-                                        {{-- Computador Asignado --}}
-                                        <td class="text-secondary">
-                                            {{ optional($apprentice->computer)->id ?? $apprentice->computer_id ?? 'Sin asignar' }}
-                                        </td>
-
-                                        {{-- Acciones --}}
-                                        <td class="text-end px-4">
-                                            <div class="d-inline-flex align-items-center gap-2">
-                                                {{-- Mostrar --}}
-                                                <a href="{{ route('apprentice.show', $apprentice->id) }}" class="btn btn-sm btn-outline-primary d-inline-flex align-items-center gap-1">
-                                                    <i class="bi bi-eye"></i> Mostrar
-                                                </a>
-
-                                                {{-- Editar --}}
-                                                <a href="{{ route('apprentice.edit', $apprentice->id) }}" class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1">
-                                                    <i class="bi bi-pencil-square"></i> Editar
-                                                </a>
-
-                                                {{-- Eliminar --}}
-                                                <form action="{{ route('apprentice.destroy', $apprentice->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('¿Estás seguro de eliminar este aprendiz?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1" title="Eliminar">
-                                                        <i class="bi bi-trash3"></i> Eliminar
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @endif
-            </div>
-        </div>
-
-        {{-- Tarjeta: Formulario Crear Nuevo Aprendiz --}}
-        <div class="card shadow-sm border-0 rounded-3">
-            <div class="card-header bg-white py-3 border-bottom">
-                <h5 class="fw-bold text-dark mb-0">Crear nuevo aprendiz</h5>
-            </div>
-            <div class="card-body p-4">
-                <form action="{{ route('apprentice.store') }}" method="POST">
-                    @csrf
-
-                    <div class="row g-3" style="max-width: 800px;">
-                        <div class="col-md-6">
-                            <label for="name" class="form-label fw-semibold">Nombre Completo:</label>
-                            <input type="text" 
-                                   name="name" 
-                                   id="name" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   placeholder="Ej: Juliana Bolaños" 
-                                   value="{{ old('name') }}" 
-                                   required>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="email" class="form-label fw-semibold">Correo Electrónico:</label>
-                            <input type="email" 
-                                   name="email" 
-                                   id="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   placeholder="ejemplo@correo.com" 
-                                   value="{{ old('email') }}" 
-                                   required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="phone" class="form-label fw-semibold">Teléfono:</label>
-                            <input type="text" 
-                                   name="phone" 
-                                   id="phone" 
-                                   class="form-control @error('phone') is-invalid @enderror" 
-                                   placeholder="Ej: 3001234567" 
-                                   value="{{ old('phone') }}" 
-                                   required>
-                            @error('phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold" for="course_id">Curso / Ficha:</label>
-                            <select name="course_id" id="course_id" class="form-select @error('course_id') is-invalid @enderror" required>
-                                <option value="">Seleccione un curso</option>
-                                @foreach($courses as $course)
-                                    <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
-                                        {{ $course->code ?? $course->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('course_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold" for="computer_id">Computador:</label>
-                            <select name="computer_id" id="computer_id" class="form-select @error('computer_id') is-invalid @enderror">
-                                <option value="">Sin asignar</option>
-                                @foreach($computers as $computer)
-                                    <option value="{{ $computer->id }}" {{ old('computer_id') == $computer->id ? 'selected' : '' }}>
-                                        Equipo #{{ $computer->id }} ({{ $computer->brand ?? 'S/M' }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('computer_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-success mt-4 d-inline-flex align-items-center gap-2">
-                        <i class="bi bi-plus-circle"></i>
-                        <span>Guardar aprendiz</span>
-                    </button>
-                </form>
-            </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 
-    <!-- Bootstrap 5 Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    {{-- Formulario Registrar Aprendiz --}}
+    <div class="form-sena-card p-4 p-md-5">
+        <h5 class="fw-bold mb-4" style="color: #00324D;">Datos del aprendiz</h5>
+
+        <form method="POST" action="{{ route('apprentice.store') }}">
+            @csrf
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="name" class="form-label small fw-bold text-secondary">Nombre completo</label>
+                    <input type="text" name="name" id="name" value="{{ old('name') }}"
+                           class="form-control rounded-pill py-2 @error('name') is-invalid @enderror"
+                           placeholder="Ej: Ana Pérez" required>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="email" class="form-label small fw-bold text-secondary">Correo electrónico</label>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}"
+                           class="form-control rounded-pill py-2 @error('email') is-invalid @enderror"
+                           placeholder="aprendiz@correo.com" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="number" class="form-label small fw-bold text-secondary">Número de documento</label>
+                    <input type="number" name="number" id="number" value="{{ old('number') }}"
+                           class="form-control rounded-pill py-2 @error('number') is-invalid @enderror"
+                              placeholder="Ej: 1006543210" required>
+                    @error('number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="course_id" class="form-label small fw-bold text-secondary">Curso</label>
+                    <select name="course_id" id="course_id" class="form-select rounded-pill py-2 @error('course_id') is-invalid @enderror">
+                        <option value="">Seleccione un curso</option>
+                        @foreach ($courses as $course)
+                            <option value="{{ $course->id }}" {{ old('course_id') == $course->id ? 'selected' : '' }}>
+                                {{ $course->name ?? $course->course_number ?? 'Curso #' . $course->id }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('course_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <label for="computer_id" class="form-label small fw-bold text-secondary">Computador asignado</label>
+                    <select name="computer_id" id="computer_id" class="form-select rounded-pill py-2 @error('computer_id') is-invalid @enderror">
+                        <option value="">Sin computador asignado</option>
+                        @foreach ($computers as $computer)
+                            <option value="{{ $computer->id }}" {{ old('computer_id') == $computer->id ? 'selected' : '' }}>
+                                Equipo #{{ $computer->id }}{{ $computer->brand ? ' - ' . $computer->brand : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('computer_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4 pt-3 border-top">
+                <button type="submit" class="btn-sena-pill d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Guardar aprendiz</span>
+                </button>
+                <a href="{{ route('apprentice.index') }}" class="btn btn-outline-secondary btn-sena-outline">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+
+</div>
+@endsection

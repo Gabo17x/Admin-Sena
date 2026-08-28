@@ -29,7 +29,7 @@ class ApprenticesController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'number' => 'nullable|string|max:255',
+            'number' => 'required|integer',
             'course_id' => 'nullable|exists:courses,id',
             'computer_id' => 'nullable|exists:computers,id',
         ]);
@@ -58,7 +58,7 @@ class ApprenticesController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'number' => 'nullable|string|max:255',
+            'number' => 'required|integer',
             'course_id' => 'nullable|exists:courses,id',
             'computer_id' => 'nullable|exists:computers,id',
         ]);

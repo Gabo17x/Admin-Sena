@@ -20,6 +20,11 @@ class HomeController extends Controller
             'teachers'         => Teachers::count(),
         ];
 
-        return view('home', compact('stats'));
+        // Últimas ofertas de formación (cursos) para mostrar en el Home
+        $offers = Courses::latest()->take(6)->get();
+        $areas = Areas::all();
+        $training_centers = TrainingCenters::all();
+
+        return view('Home.home', compact('stats', 'offers', 'areas', 'training_centers'));
     }
 }

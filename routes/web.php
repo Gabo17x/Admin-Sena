@@ -9,6 +9,7 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\ApprenticesController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AuthController;
 
 // Centros de Formación
 Route::get('training-center', [TrainingCentersController::class, 'index'])->name('training_center.index');
@@ -64,10 +65,12 @@ Route::put('teacher/{teacher}', [TeachersController::class, 'update'])->name('te
 Route::delete('teacher/{teacher}', [TeachersController::class, 'destroy'])->name('teacher.destroy');
 Route::get('teacher/{teacher}', [TeachersController::class, 'show'])->name('teacher.show');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+//Quienes somos
+Route::get('/quienes-somos', function () {    return view('quienes-somos.index'); })->name('quienes-somos');
 
+// Rutas de Autenticación
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-
-
-Route::get('/', function () { return view('welcome');});
+    Route::get('/', [HomeController::class, 'index'])->name('home');

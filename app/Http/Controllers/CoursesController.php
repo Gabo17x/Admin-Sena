@@ -11,8 +11,7 @@ class CoursesController extends Controller
 {
     public function index()
     {
-    $courses = Courses::with(['area', 'trainingCenters'])->get();
-    return view('Courses.index', compact('courses'));
+        return redirect()->route('course.create');
     }
     
     public function create()
