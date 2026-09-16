@@ -122,19 +122,33 @@
 
             <div class="row g-3" style="max-width: 600px;">
                 <div class="col-12">
+                    <label for="number" class="form-label small fw-bold text-secondary">Número de Equipo</label>
+                    <input type="text"
+                        name="number"
+                        id="number"
+                        class="form-control rounded-pill py-2 @error('number') is-invalid @enderror"
+                        placeholder="Ej: EQ-001"
+                        value="{{ old('number') }}"
+                        required>
+                    @error('number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="col-12">
                     <label for="brand" class="form-label small fw-bold text-secondary">Marca del Computador</label>
                     <input type="text"
-                           name="brand"
-                           id="brand"
-                           class="form-control rounded-pill py-2 @error('brand') is-invalid @enderror"
-                           placeholder="Ej: Lenovo, HP, Asus..."
-                           value="{{ old('brand') }}"
-                           required>
+                        name="brand"
+                        id="brand"
+                        class="form-control rounded-pill py-2 @error('brand') is-invalid @enderror"
+                        placeholder="Ej: Lenovo, HP, Asus..."
+                        value="{{ old('brand') }}"
+                        required>
                     @error('brand')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
+        </div>
 
             <button type="submit" class="btn-sena-pill mt-4 d-inline-flex align-items-center gap-2">
                 <i class="bi bi-plus-circle-fill"></i>

@@ -10,6 +10,20 @@ use App\Http\Controllers\ApprenticesController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuienesSomosController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\AmbientsController;
+use App\Http\Controllers\OffersController;  
+
+
 
 // Centros de Formación
 Route::get('training-center', [TrainingCentersController::class, 'index'])->name('training_center.index');
@@ -56,6 +70,8 @@ Route::put('apprentice/{apprentice}', [ApprenticesController::class, 'update'])-
 Route::delete('apprentice/{apprentice}', [ApprenticesController::class, 'destroy'])->name('apprentice.destroy');
 Route::get('apprentice/{apprentice}', [ApprenticesController::class, 'show'])->name('apprentice.show');
 
+
+
 // Instructores
 Route::get('teacher', [TeachersController::class, 'index'])->name('teacher.index');
 Route::get('teacher/create', [TeachersController::class, 'create'])->name('teacher.create');
@@ -73,4 +89,34 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+//Registrar usuario
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
+// Ambientes
+
+Route::get('ambients', [AmbientsController::class, 'index'])->name('ambients.index');
+Route::get('ambients/create', [AmbientsController::class, 'create'])->name('ambients.create');
+Route::post('ambients/store', [AmbientsController::class, 'store'])->name('ambients.store');
+Route::get('ambients/{ambient}', [AmbientsController::class, 'show'])->name('ambients.show');
+Route::get('ambients/{ambient}/edit', [AmbientsController::class, 'edit'])->name('ambients.edit');
+Route::put('ambients/{ambient}', [AmbientsController::class, 'update'])->name('ambients.update');
+Route::delete('ambients/{ambient}', [AmbientsController::class, 'destroy'])->name('ambients.destroy');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+ 
+// Rutas de Ofertas
+Route::get('offers', [OffersController::class, 'index'])->name('offers.index');
+Route::get('offers/create', [OffersController::class, 'create'])->name('offers.create');
+Route::post('offers/store', [OffersController::class, 'store'])->name('offers.store');
+Route::get('offers/{offer}', [OffersController::class, 'show'])->name('offers.show');
+Route::get('offers/{offer}/edit', [OffersController::class, 'edit'])->name('offers.edit');
+Route::put('offers/{offer}', [OffersController::class, 'update'])->name('offers.update');
+Route::delete('offers/{offer}', [OffersController::class, 'destroy'])->name('offers.destroy');
+
+// Rutas de Inscripciones
+
+
+require __DIR__.'/auth.php';
+
+

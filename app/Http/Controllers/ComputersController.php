@@ -17,7 +17,7 @@ class ComputersController extends Controller
 
     public function create()
     {
-        $computers = Computers::with('apprentice')->get();
+        $computers = Computers::all();
         return view('Computer.create', compact('computers'));
     }
 

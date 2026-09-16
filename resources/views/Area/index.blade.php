@@ -37,6 +37,10 @@
                                 <th class="px-4 py-3 text-secondary" style="width: 80px;">#</th>
                                 <th class="py-3 text-secondary">Nombre</th>
                                 <th class="py-3 text-end px-4 text-secondary" style="width: 260px;">Acciones</th>
+                                <th><img 
+                                    src="" alt="">
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>

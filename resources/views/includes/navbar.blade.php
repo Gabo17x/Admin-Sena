@@ -60,12 +60,13 @@
                                 <li><a class="dropdown-item rounded-3 py-2 small fw-semibold" href="{{ url('/course/create') }}">✏️ Cursos</a></li>
                                 <li><a class="dropdown-item rounded-3 py-2 small fw-semibold" href="{{ url('/teacher/create') }}">👨‍🏫 Instructores</a></li>
                                 <li><a class="dropdown-item rounded-3 py-2 small fw-semibold" href="{{ url('/apprentice/create') }}">🧑‍💻 Aprendices</a></li>
+                                <li><a class="dropdown-item rounded-3 py-2 small fw-semibold" href="{{ url('/ambients/create') }}">🏫 Ambientes</a></li>
                             </ul>
                         </div>
                         
                     </nav>
                 </div>
-
+                <br>
                 <!-- Búsqueda y Sesión -->
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-none d-sm-flex align-items-center bg-light rounded-pill px-3 py-1 border">
@@ -77,8 +78,8 @@
 
                     <a href="/login" class="btn-sena-pill" style="font-size: 0.8rem;">
                         <i class="bi bi-person-fill"></i>
-                        <span>Iniciar Sesión</span>
-                        <i class="bi bi-chevron-down ms-1" style="font-size: 0.6rem;"></i>
+                        <span>Cerrar sesión</span>
+                        
                     </a>
                 </div>
 

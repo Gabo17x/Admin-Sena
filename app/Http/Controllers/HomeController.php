@@ -7,6 +7,7 @@ use App\Models\Courses;
 use App\Models\TrainingCenters;
 use App\Models\Apprentices;
 use App\Models\Teachers;
+use App\Models\Offer;
 
 class HomeController extends Controller
 {
@@ -20,11 +21,9 @@ class HomeController extends Controller
             'teachers'         => Teachers::count(),
         ];
 
-        // Últimas ofertas de formación (cursos) para mostrar en el Home
-        $offers = Courses::latest()->take(6)->get();
-        $areas = Areas::all();
-        $training_centers = TrainingCenters::all();
+        // Últimas ofertas de formación para mostrar en el Home
+        $offers = Offer::with(['area', 'trainingCenter'])->latest()->take(6)->get();
 
-        return view('Home.home', compact('stats', 'offers', 'areas', 'training_centers'));
+        return view('Home.home', compact('stats', 'offers'));
     }
 }

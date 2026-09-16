@@ -199,9 +199,7 @@
                     <i class="bi bi-person-plus-fill"></i>
                     <span>Guardar aprendiz</span>
                 </button>
-                <a href="{{ route('apprentice.index') }}" class="btn btn-outline-secondary btn-sena-outline">
-                    Cancelar
-                </a>
+               
             </div>
         </form>
     </div>

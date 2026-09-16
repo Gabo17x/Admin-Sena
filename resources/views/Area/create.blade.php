@@ -127,7 +127,7 @@
                            name="name"
                            id="name"
                            class="form-control rounded-pill py-2 @error('name') is-invalid @enderror"
-                           placeholder="Ej: Tecnología, Agricultura..."
+                           placeholder="Ej: Sistemas Y Redes..."
                            value="{{ old('name') }}"
                            required>
                     @error('name')

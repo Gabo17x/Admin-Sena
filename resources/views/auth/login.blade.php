@@ -140,6 +140,16 @@
                             </div>
                         </div>
 
+                    <!-- Bloque de Opciones (Recordarme y Olvidé Contraseña) -->
+                        <div class="flex items-center justify-between mt-4 mb-4">
+                           
+                            @if (Route::has('password.request'))
+                                <a class="text-sm text-green-600 hover:text-green-700 underline rounded-md focus:outline-none" href="{{ route('password.request') }}">
+                                    ¿Olvidaste tu contraseña?
+                                </a>
+                            @endif
+                        </div>
+
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember">
@@ -153,6 +163,9 @@
                             Ingresar
                         </button>
 
+                        <div class="text-center">
+                            <span class="text-secondary small">¿No tienes una cuenta? <a href="{{ route('register') }}" class="text-green-600 hover:text-green-700 underline rounded-md focus:outline-none">Regístrate</a></span>
+                        </div>
                         <div class="text-center">
                             <a href="{{ url('/') }}" class="text-secondary small hover-sena">
                                 <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
@@ -182,5 +195,6 @@
         });
     </script>
 
+   
 </body>
 </html>

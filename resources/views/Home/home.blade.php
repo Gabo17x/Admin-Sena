@@ -102,7 +102,7 @@
                     <div id="heroInnerCarousel" class="carousel slide carousel-fade rounded-4 overflow-hidden shadow-sm" data-bs-ride="carousel" data-bs-interval="4500" style="height: 320px;">
                         <div class="carousel-inner h-100">
                             <div class="carousel-item active h-100">
-                                <img src="{{ asset('images/imagenes one.jpeg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Slide 1">
+                                <img src="{{ asset('images/imagenes ocho.jpg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Slide 1">
                             </div>
                             <div class="carousel-item h-100">
                                 <img src="{{ asset('images/imagenes dos.jpeg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Slide 2">
@@ -110,7 +110,7 @@
                             <div class="carousel-item h-100">
                                 <img src="{{ asset('images/imagenes tres.JPG') }}" class="d-block w-100 h-100 object-fit-cover" alt="Slide 3">
                             </div>
-                          
+
                             <div class="carousel-item h-100">
                                 <img src="{{ asset('images/imagenes cinco.jpg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Slide 5">
                             </div>
@@ -132,7 +132,7 @@
                     <div class="border-start ps-4">
                         <span class="d-block text-muted text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 0.05em;">Estado Actual</span>
                         <span class="fw-semibold text-dark d-flex align-items-center gap-2" style="font-size: 0.82rem;">
-                            Todos los módulos 
+                            Todos los módulos
                         </span>
                     </div>
                 </div>
@@ -172,8 +172,7 @@
         </div>
     </section>
 
-    
-        <!-- Ofertas de Formación 🐦‍🔥🐦‍🔥🐦‍🔥🐦‍🔥🐦‍🔥-->
+    <!-- Ofertas de Formación -->
     <section id="pilares" class="my-5">
         <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
             <div>
@@ -183,8 +182,12 @@
                 <h2 class="mb-0" style="font-weight: 900; color: #00324D; font-size: 1.8rem;">
                     Ofertas de Formación
                 </h2>
+                <br>
             </div>
-          
+
+            <a href="{{ route('offers.create') }}" class="btn-sena-pill">
+                <i class="bi bi-plus-circle-fill"></i> Añadir Oferta
+            </a>
         </div>
 
         @if($offers->isEmpty())
@@ -195,33 +198,28 @@
         @else
             <div class="row g-4">
                 @foreach ($offers as $offer)
-                    @php
-                        $areaItem = $areas->firstWhere('id', $offer->area_id);
-                        $centerItem = $training_centers->firstWhere('id', $offer->training_center_id);
-                    @endphp
                     <div class="col-md-6 col-lg-4">
                         <div class="pilar-card position-relative">
 
-                            <!-- Badge esquina superior derecha -->
                             <span class="position-absolute top-0 end-0 m-3 badge rounded-pill px-3 py-2" style="background: #00324D; color: #ffffff; font-size: 0.7rem; font-weight: 700; z-index: 2;">
-                                {{ $offer->day ?? 'Sin jornada' }}
+                                {{ ucfirst($offer->schedule) ?? 'Sin jornada' }}
                             </span>
 
                             <div class="p-4 d-flex flex-column h-100">
                                 <span class="badge rounded-pill align-self-start mb-3" style="background: #ecfdf5; color: #39A900; border: 1px solid #a7f3d0; font-size: 0.7rem; font-weight: 700;">
-                                    <i class="bi bi-bookmark-fill me-1"></i>{{ $areaItem ? $areaItem->name : 'Sin área' }}
+                                    <i class="bi bi-bookmark-fill me-1"></i>{{ $offer->area->name ?? 'Sin área' }}
                                 </span>
 
                                 <h5 class="fw-bold mb-3" style="color: #00324D; line-height: 1.3;">
-                                    Ficha {{ $offer->course_number ?? $offer->name ?? $offer->id }}
+                                    Ficha {{ $offer->ficha }}
                                 </h5>
 
                                 <div class="d-flex flex-column gap-2 mb-3 text-secondary small">
-                                    <span><i class="bi bi-geo-alt-fill me-2" style="color: #39A900;"></i>{{ $centerItem ? $centerItem->name : 'Centro por definir' }}</span>
-                                    <span><i class="bi bi-clock-fill me-2" style="color: #39A900;"></i>{{ $offer->day ?? 'Horario por definir' }}</span>
+                                    <span><i class="bi bi-geo-alt-fill me-2" style="color: #39A900;"></i>{{ $offer->trainingCenter->name ?? 'Centro por definir' }}</span>
+                                    <span><i class="bi bi-clock-fill me-2" style="color: #39A900;"></i>{{ ucfirst($offer->schedule) }}</span>
                                 </div>
 
-                                <a href="{{ route('course.show', $offer->id) }}" class="btn-sena-pill mt-auto align-self-start" style="font-size: 0.78rem; padding: 0.5rem 1.3rem;">
+                                <a href="{{ route('offers.show', $offer->id) }}" class="btn-sena-pill mt-auto align-self-start" style="font-size: 0.78rem; padding: 0.5rem 1.3rem;">
                                     Ver detalles <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                             </div>

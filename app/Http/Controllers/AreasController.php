@@ -24,6 +24,8 @@ class AreasController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
+
+        
         ]);
         
         Areas::create($data);
