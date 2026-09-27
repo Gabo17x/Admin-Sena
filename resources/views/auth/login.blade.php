@@ -133,6 +133,8 @@
                                 <input type="password" name="password" id="password" required
                                        class="form-control bg-light border-start-0 border-end-0 py-2 text-dark"
                                        placeholder="••••••••">
+                                       
+                                       <!-- Funcion para ocultar y mostrar contraseña -->
                                 <button class="input-group-text toggle-password-btn border-start-0 rounded-end-pill pe-3 text-secondary"
                                         type="button" id="btnTogglePassword" aria-label="Mostrar u ocultar contraseña">
                                     <i class="bi bi-eye-slash-fill" id="toggleIcon"></i>

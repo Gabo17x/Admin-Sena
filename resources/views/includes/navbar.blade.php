@@ -31,11 +31,13 @@
                 
                 <div class="d-flex align-items-center gap-4 gap-lg-5">
                     <a href="{{ url('/') }}" class="d-flex align-items-center gap-2">
-                        <img src="{{ asset('images/logosena.png') }}" alt="Logo SENA" style="height: 34px; width: auto; object-fit: contain;">
+                        <img src="{{ asset('images/logosena.png') }}" alt="Logo SENA" style="height: 45px; width: auto; object-fit: contain;">
                         <span class="fs-4 fw-black text-[#ffffff]" style="font-weight: 900; color: #00324D;">Admin<span style="color: #39A900;">SENA</span></span>
                     </a>
 
                     <nav class="d-none d-md-flex align-items-center gap-4 text-sm fw-semibold">
+
+                        <a href="{{ route('home') }}" class="text-secondary hover-sena">Inicio</a>
                         
                         <a href="{{ route('quienes-somos') }}" class="text-secondary hover-sena">¿Quiénes Somos?</a>
 

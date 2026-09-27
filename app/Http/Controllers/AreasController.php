@@ -11,54 +11,42 @@ class AreasController extends Controller
     public function index()
     {
         $areas = Areas::all();
-        return view('Area.index', compact('areas'));
-    }
-
-    public function create()
-    {
-        $areas = Areas::latest()->get();
-        return view('Area.create', compact('areas'));
+        return response()->json($areas);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-
-        
         ]);
-        
-        Areas::create($data);
 
-        // Corregido a 'area.create' (singular)
-        return redirect()->route('area.create')->with('success', 'Área creada exitosamente.');
+        $areas = Areas::create($data);
+
+        return response()->json($areas, 201);
     }
 
-    public function show(Areas $area)
+    public function show(int $id)
     {
-        return view('Area.show', compact('area'));
+        $areas = Areas::findOrFail($id);
+
+        return response()->json($areas);
     }
 
-    public function edit(Areas $area)
-    {
-        return view('Area.edit', compact('area'));
-    }
-
-    public function update(Request $request, Areas $area)
+    public function update(Request $request, Areas $areas)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $area->update($data);
+        $areas->update($data);
 
-        return redirect()->route('area.create')->with('success', 'Área actualizada correctamente.');
+        return response()->json($areas, 200);
     }
 
     public function destroy(Areas $area)
     {
         $area->delete();
 
-        return redirect()->route('area.create')->with('success', 'Área eliminada correctamente.');
+        return response()->json(null, 204);
     }
 }

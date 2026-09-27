@@ -12,13 +12,7 @@ class ComputersController extends Controller
     public function index()
     {
         $computers = Computers::with('apprentice')->get();
-        return view('Computers.index', compact('computers'));
-    }
-
-    public function create()
-    {
-        $computers = Computers::all();
-        return view('Computer.create', compact('computers'));
+        return response()->json($computers, 200);
     }
 
     public function store(Request $request)
@@ -28,14 +22,31 @@ class ComputersController extends Controller
             'brand'  => 'required|string|max:100',
         ]);
 
-        Computers::create($data);
+        $computer = Computers::create($data);
 
-        return redirect()->route('computer.create')->with('success', 'Computador registrado correctamente.');
+        return response()->json($computer, 201);
+    }
+
+    public function show(Computers $computer)
+    {
+        return response()->json($computer);
+    }
+
+    public function update(Request $request, Computers $computer)
+    {
+        $data = $request->validate([
+            'number' => 'required|string|max:50',
+            'brand'  => 'required|string|max:100',
+        ]);
+
+        $computer->update($data);
+
+        return response()->json($computer, 200);
     }
 
     public function destroy(Computers $computer)
     {
         $computer->delete();
-        return redirect()->route('computer.create')->with('success', 'Computador eliminado correctamente.');
+        return response()->json(null, 204);
     }
 }
