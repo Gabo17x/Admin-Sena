@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Areas;
+use Illuminate\Http\Request;
 
 class AreasController extends Controller
 {
     public function index()
     {
-        $areas = Areas::all();
-        return response()->json($areas);
+        $areas = Areas::orderBy('id')->get();
+
+        return view('Area.index', compact('areas'));
+    }
+
+    public function create()
+    {
+        $areas = Areas::orderBy('id')->get();
+
+        return view('Area.create', compact('areas'));
     }
 
     public function store(Request $request)
@@ -20,33 +27,36 @@ class AreasController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $areas = Areas::create($data);
+        $area = Areas::create($data);
 
-        return response()->json($areas, 201);
+        return response()->json($area, 201);
     }
 
-    public function show(int $id)
+    public function show(Areas $area)
     {
-        $areas = Areas::findOrFail($id);
-
-        return response()->json($areas);
+        return view('Area.show', compact('area'));
     }
 
-    public function update(Request $request, Areas $areas)
+    public function edit(Areas $area)
+    {
+        return view('Area.edit', compact('area'));
+    }
+
+    public function update(Request $request, Areas $area)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $areas->update($data);
+        $area->update($data);
 
-        return response()->json($areas, 200);
+        return redirect()->route('area.create')->with('success', 'Área actualizada correctamente.');
     }
 
     public function destroy(Areas $area)
     {
         $area->delete();
 
-        return response()->json(null, 204);
+        return redirect()->route('area.create');
     }
 }

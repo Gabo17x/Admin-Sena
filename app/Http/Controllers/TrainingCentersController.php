@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\TrainingCenters;
+use Illuminate\Http\Request;
 
 class TrainingCentersController extends Controller
 {
     public function index()
     {
-        $training_centers = TrainingCenters::all();
-        return response()->json($training_centers);
+        $training_centers = TrainingCenters::orderBy('id')->get();
+
+        return view('Training_Center.index', compact('training_centers'));
+    }
+
+    public function create()
+    {
+        $training_centers = TrainingCenters::orderBy('id')->get();
+
+        return view('Training_Center.create', compact('training_centers'));
     }
 
     public function store(Request $request)
@@ -21,14 +28,19 @@ class TrainingCentersController extends Controller
             'location' => 'required|string|max:255',
         ]);
 
-        $training_center = TrainingCenters::create($data);
+        TrainingCenters::create($data);
 
-        return response()->json($training_center, 201);
+        return redirect()->route('training_center.index')->with('success', 'Centro registrado correctamente.');
     }
 
     public function show(TrainingCenters $training_center)
     {
-        return response()->json($training_center);
+        return view('Training_Center.show', compact('training_center'));
+    }
+
+    public function edit(TrainingCenters $training_center)
+    {
+        return view('Training_Center.edit', compact('training_center'));
     }
 
     public function update(Request $request, TrainingCenters $training_center)
@@ -40,13 +52,14 @@ class TrainingCentersController extends Controller
 
         $training_center->update($data);
 
-        return response()->json($training_center, 200);
+        return redirect()->route('training_center.index')->with('success', 'Centro actualizado correctamente.');
     }
 
     public function destroy(TrainingCenters $training_center)
     {
         $training_center->delete();
 
-        return response()->json(null, 204);
+        return redirect()->route('training_center.index')->with('success', 'Centro eliminado correctamente.');
     }
+}
 }

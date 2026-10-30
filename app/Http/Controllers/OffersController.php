@@ -78,7 +78,7 @@ class OffersController extends Controller
 
         if ($request->hasFile('image')) {
             if ($offer->image) {
-                \Storage::disk('public')->delete($offer->image);
+                Storage::disk('public')->delete($offer->image);
             }
             $data['image'] = $request->file('image')->store('offers', 'public');
         }
@@ -92,7 +92,7 @@ class OffersController extends Controller
     {
         $offer = Offer::findOrFail($id);
         if ($offer->image) {
-            \Storage::disk('public')->delete($offer->image);
+            Storage::disk('public')->delete($offer->image);
         }
         $offer->delete();
 

@@ -2,51 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Computers;
-use App\Models\Apprentices;
 use Illuminate\Http\Request;
 
 class ComputersController extends Controller
 {
     public function index()
     {
-        $computers = Computers::with('apprentice')->get();
-        return response()->json($computers, 200);
+        $computers = Computers::with('apprentice')->orderBy('id')->get();
+
+        return view('Computer.create', compact('computers'));
+    }
+
+    public function create()
+    {
+        $computers = Computers::with('apprentice')->orderBy('id')->get();
+
+        return view('Computer.create', compact('computers'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'number' => 'required|string|max:50',
-            'brand'  => 'required|string|max:100',
+            'brand' => 'required|string|max:100',
         ]);
 
-        $computer = Computers::create($data);
+        Computers::create($data);
 
-        return response()->json($computer, 201);
+        return redirect()->route('computer.create')->with('success', 'Computador registrado correctamente.');
     }
 
     public function show(Computers $computer)
     {
-        return response()->json($computer);
+        return view('Computer.show', compact('computer'));
+    }
+
+    public function edit(Computers $computer)
+    {
+        return view('Computer.edit', compact('computer'));
     }
 
     public function update(Request $request, Computers $computer)
     {
         $data = $request->validate([
             'number' => 'required|string|max:50',
-            'brand'  => 'required|string|max:100',
+            'brand' => 'required|string|max:100',
         ]);
 
         $computer->update($data);
 
-        return response()->json($computer, 200);
+        return redirect()->route('computer.create')->with('success', 'Computador actualizado correctamente.');
     }
 
     public function destroy(Computers $computer)
     {
         $computer->delete();
-        return response()->json(null, 204);
+
+        return redirect()->route('computer.create')->with('success', 'Computador eliminado correctamente.');
     }
 }

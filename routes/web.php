@@ -84,15 +84,6 @@ Route::get('teacher/{teacher}', [TeachersController::class, 'show'])->name('teac
 //Quienes somos
 Route::get('/quienes-somos', function () {    return view('quienes-somos.index'); })->name('quienes-somos');
 
-// Rutas de Autenticación
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-//Registrar usuario
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store']);
-
 // Ambientes
 
 Route::get('ambients', [AmbientsController::class, 'index'])->name('ambients.index');

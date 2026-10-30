@@ -5,26 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Courses extends Model
+class CourseTeachers extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'course_number',
-        'day',
-        'area_id',
-        'training_center_id',
+        'course_id',
+        'teacher_id',
     ];
 
-    // Relación con Área (soluciona el error)
-    public function area()
+    public function course()
     {
-        return $this->belongsTo(areas::class, 'area_id');
+        return $this->belongsTo(Courses::class, 'course_id');
     }
 
-    // Relación con Centro de Formación
-    public function trainingCenters()
+    public function teacher()
     {
-        return $this->belongsTo(TrainingCenters::class, 'training_center_id');
+        return $this->belongsTo(Teachers::class, 'teacher_id');
     }
 }
