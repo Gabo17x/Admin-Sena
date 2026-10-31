@@ -321,13 +321,13 @@
     </div>
 
 </div>
-@endsection"
-                           name="name"
-                           id="name"
-                           class="form-control rounded-pill py-2 @error('name') is-invalid @enderror"
-                           placeholder="Ej: CTPI"
-                           value="{{ old('name') }}"
-                           required>
+                @endsection"
+                        name="name"
+                        id="name"
+                        class="form-control rounded-pill py-2 @error('name') is-invalid @enderror"
+                        placeholder="Ej: CTPI"
+                        value="{{ old('name') }}"
+                        required>
                     @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

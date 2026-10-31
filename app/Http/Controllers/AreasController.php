@@ -3,33 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Areas;
+use App\Models\TrainingCenters;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 
 class AreasController extends Controller
 {
+   
+
+
+
     public function index()
     {
-        $areas = Areas::orderBy('id')->get();
+        $areas = Areas::all();
 
         return view('Area.index', compact('areas'));
     }
 
     public function create()
     {
-        $areas = Areas::orderBy('id')->get();
+        $areas = Areas::all();
 
         return view('Area.create', compact('areas'));
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
+
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'brand' => 'required|string|max:255',
+        'image' => 'required|image|max:2048',
+    ]);
 
-        $area = Areas::create($data);
+    $data['image'] = $this->subirImagen($request->file('image'), 'areas');
 
-        return response()->json($area, 201);
+    Areas::create($data);
+
+    return redirect()->route('area.create')->with('success', 'Área creada correctamente.');
     }
 
     public function show(Areas $area)
@@ -46,7 +57,12 @@ class AreasController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $this->subirImagen($request->file('image'), 'areas');
+        }
 
         $area->update($data);
 

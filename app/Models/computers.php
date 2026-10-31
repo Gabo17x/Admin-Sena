@@ -14,6 +14,8 @@ class Computers extends Model
     protected $fillable = [
         'number',
         'brand',
+        'imagen_url',
+        'imagen_public_id',
     ];
 
     // Relación 1 a 1 / 1 a N con Aprendiz

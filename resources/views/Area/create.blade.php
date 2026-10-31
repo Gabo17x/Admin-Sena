@@ -75,6 +75,7 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-3" style="width: 80px;">#</th>
+                                <th class="py-3" style="width: 100px;">Imagen</th>
                                 <th class="py-3">Nombre</th>
                                 <th class="py-3 text-end px-4" style="width: 280px;">Acciones</th>
                             </tr>
@@ -82,7 +83,19 @@
                         <tbody>
                             @foreach ($areas as $area)
                                 <tr>
+                                    <td>
+                                        @if ($area->image)
+                                            <img src="{{ $area->image }}" alt="Imagen del área" width="60" class="rounded">
+                                        @endif
+                                    </td>
                                     <td class="px-4 fw-semibold text-secondary">{{ $area->id }}</td>
+                                    <td>
+
+                                        @if ($area->image)
+                                            <img src="{{ $area->image }}" alt="Imagen del área" width="60" class="rounded">
+                                        @endif
+                                    </td>
+                                    
                                     <td class="fw-semibold" style="color: #00324D;">
                                         <i class="bi bi-journal-bookmark me-2 fs-5 align-middle" style="color: #39A900;"></i>
                                         <span>{{ $area->name }}</span>
@@ -117,7 +130,7 @@
     <div class="form-sena-card p-4 p-md-5">
         <h5 class="fw-bold mb-4" style="color: #00324D;">Crear nueva área</h5>
 
-        <form action="{{ route('area.store') }}" method="POST">
+        <form action="{{ route('area.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="row g-3" style="max-width: 500px;">
@@ -134,6 +147,19 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+            </div>
+            
+             <div class="col-12">
+                <label for="image" class="form-label small fw-bold text-secondary">Imagen</label>
+                <input type="file"
+                    name="image"
+                    id="image"
+                    class="form-control @error('image') is-invalid @enderror"
+                    accept="image/jpeg,image/png,image/webp"
+                    required>
+                @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <button type="submit" class="btn-sena-pill mt-4 d-inline-flex align-items-center gap-2">

@@ -62,4 +62,3 @@ class TrainingCentersController extends Controller
         return redirect()->route('training_center.index')->with('success', 'Centro eliminado correctamente.');
     }
 }
-}

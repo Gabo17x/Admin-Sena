@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');         
+            $table->string('name');    
+            $table->string('imagen_url')->nullable();
+            $table->string('imagen_public_id')->nullable();
             $table->timestamps();
         });
     }

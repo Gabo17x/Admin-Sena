@@ -72,6 +72,7 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-3" style="width: 80px;"># ID</th>
+                                <th class="py-3" style="width: 100px;">Imagen</th>
                                 <th class="py-3">Número de Equipo</th>
                                 <th class="py-3">Marca</th>
                                 <th class="py-3 text-end px-4" style="width: 260px;">Acciones</th>
@@ -81,9 +82,15 @@
                             @foreach ($computers as $computer)
                                 <tr>
                                     <td class="px-4 fw-semibold text-secondary">{{ $computer->id }}</td>
+                                    <td>
+                                        @if ($computer->imagen_url)
+                                            <img src="{{ $computer->imagen_url }}" alt="Imagen del computador" width="60" class="rounded">
+                                        @endif
+                                    </td>
                                     <td class="fw-semibold" style="color: #00324D;">
+
                                         <i class="bi bi-laptop me-2 fs-5 align-middle" style="color: #39A900;"></i>
-                                        <span>Equipo #{{ $computer->id }}</span>
+                                        <span>{{ $computer->number }}</span>
                                     </td>
                                     <td class="text-secondary">
                                         {{ $computer->brand ?? $computer->name ?? 'N/A' }}

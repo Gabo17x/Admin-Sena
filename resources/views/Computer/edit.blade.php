@@ -14,12 +14,12 @@
 
 					<label class="form-label">
 						Número:
-						<input type="number" name="number" class="form-control" value="{{ old('number', $computer->number) }}">
+						<input type="text" name="number" class="form-control" value="{{ old('number', $computer->number) }}" required>
 					</label>
 
 					<label class="form-label mt-3">
 						Marca:
-						<input type="text" name="brand" class="form-control" value="{{ old('brand', $computer->brand) }}">
+						<input type="text" name="brand" class="form-control" value="{{ old('brand', $computer->brand) }}" required>
 					</label>
 
 					<button type="submit" class="btn btn-success mt-3">Actualizar computador</button>
